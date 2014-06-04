@@ -23,12 +23,10 @@ def main():
 
     tree = ElementTree.parse(XMLFILE)
     elem = tree.getroot()
+    print elem
 
-    print elem.tag
-    print elem.attrib
-
-#    e = elem.find('.//Version')
-#    print e.text
+    e = elem.find('.//{http://www.iugonet.org/data/schema}Version')
+    print e.text
 
 if __name__ == "__main__":
     main()
