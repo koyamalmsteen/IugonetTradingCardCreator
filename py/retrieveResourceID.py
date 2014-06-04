@@ -19,13 +19,13 @@ def main():
         if o in ("-o", "--output"):
             output = a
 
-    XMLFILE = "VHF.xml"
+    XMLFILE = "../xml/VHF.xml"
 
     tree = ElementTree.parse(XMLFILE)
     elem = tree.getroot()
     print elem
 
-    e = elem.find('.//{http://www.iugonet.org/data/schema}Version')
+    e = elem.find('.//{http://www.iugonet.org/data/schema}Instrument/{http://www.iugonet.org/data/schema}ResourceID')
     print e.text
 
 if __name__ == "__main__":
