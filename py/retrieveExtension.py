@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 from xml.etree import ElementTree
-import getopt, sys
+import getopt, sys, Image
 
 def main():
     try:
@@ -19,16 +19,9 @@ def main():
         if o in ("-o", "--output"):
             output = a
 
-    XMLFILE = "VHF.xml"
+    FILE = "qrcode.png"
 
-    tree = ElementTree.parse(XMLFILE)
-    elem = tree.getroot()
-
-    print elem.tag
-    print elem.attrib
-
-#    e = elem.find('.//Version')
-#    print e.text
+    Image.open(FILE).resize((300,150)).save("qrcode2.png")
 
 if __name__ == "__main__":
     main()
