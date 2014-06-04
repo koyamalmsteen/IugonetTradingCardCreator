@@ -1,4 +1,7 @@
 #!/usr/bin/env python
+import urllib
+import os
+
 try:
     import lxml.etree as ET
 except ImportError:
@@ -11,7 +14,7 @@ import Image
 def main():
     parser = optparse.OptionParser()
     parser.add_option('-i', '--input', 
-                      dest="input_filename",
+                      dest="inputXml",
                       default="../xml/VHF.xml",
                       help="(in XML)")
     parser.add_option('-o', '--output',
@@ -20,17 +23,24 @@ def main():
                       help="(in PNG)")
     options, remainder = parser.parse_args()
 
-    tree = ET.parse(options.input_filename)
+    tree = ET.parse(options.inputXml)
     elem = tree.getroot()
 
     id = elem.find('.//{http://www.iugonet.org/data/schema}Instrument/{http://www.iugonet.org/data/schema}ResourceID').text
 
-    img = qrcode.make(id)
-#    img = qrcode.make(id, image_factory=qrcode.image.svg.SvgImage)
-    img.save(options.output_filename)
+    baseWidth = 300
+    baseHeight = 150
 
-# http://center.stelab.nagoya-u.ac.jp/sd2007/top.jpg
-    Image.open(options.input_filename).resize((300,150)).save("qrcode2.png")
+    imageURL = "http://center.stelab.nagoya-u.ac.jp/sd2007/top.jpg"
+    imageFile = "/tmp/hoge.jpg"
+    urllib.urlretrieve(imageURL, imageFile)
+    img_orig = Image.open(imageFile)
+
+    # ignore the aspect ratio
+    img_resized = img_orig.resize((baseWidth,baseHeight), Image.ANTIALIAS)
+    img_resized.save("/tmp/hoge2.jpg")
+
+    os.remove(imageFile)
 
 if __name__ == "__main__":
     main()
