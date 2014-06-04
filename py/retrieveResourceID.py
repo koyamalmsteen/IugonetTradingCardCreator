@@ -23,10 +23,8 @@ def main():
 
     tree = ElementTree.parse(XMLFILE)
     elem = tree.getroot()
-    print elem
 
-    e = elem.find('.//{http://www.iugonet.org/data/schema}Instrument/{http://www.iugonet.org/data/schema}ResourceID')
-    print e.text
+    print elem.find('.//{http://www.iugonet.org/data/schema}Instrument/{http://www.iugonet.org/data/schema}ResourceID').text
 
 if __name__ == "__main__":
     main()
