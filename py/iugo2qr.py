@@ -1,8 +1,12 @@
 #!/usr/bin/env python
 try:
     import lxml.etree as ET
-except ImportError:
-    import xml.etree.ElementTree as ET
+except AttributeError:
+    def register_namespace(prefix, uri):
+        ET._namespace_map[uri] = prefix
+#except ImportError:
+#    import xml.etree.ElementTree as ET
+import qrcode.image.base
 
 import optparse
 import sys
@@ -26,8 +30,16 @@ def main():
 
     id = elem.find('.//{http://www.iugonet.org/data/schema}Instrument/{http://www.iugonet.org/data/schema}ResourceID').text
 
-    img = qrcode.make(id)
-#    img = qrcode.make(id, image_factory=qrcode.image.svg.SvgImage)
+    qr = qrcode.QRCode(
+        version=1,
+        error_correction=qrcode.constants.ERROR_CORRECT_L,
+        box_size=2,
+        border=2,
+        )
+    qr.add_data(id)
+    qr.make(fit=True)
+    img = qr.make_image()
+#    img = qrcode.make(id)
     img.save(options.output_filename)
 
 
