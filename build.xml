@@ -32,6 +32,7 @@
   </target>
 
   <target name="packages" description="Install packages">
+    <mkdir dir="${src}" />
     <get src="${src_qrcode}" usetimestamp="true" dest="${dst_qrcode}" />
     <exec executable="tar" dir="${src}">
       <arg line="xvzf ${dst_qrcode}" />
