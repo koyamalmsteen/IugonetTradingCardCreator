@@ -28,7 +28,7 @@
   </target>
 
   <target name="clean" description="Clean">
-
+    <delete dir="${src}" />
   </target>
 
   <target name="packages" description="Install packages">
@@ -37,6 +37,10 @@
     <exec executable="tar" dir="${src}">
       <arg line="xvzf ${dst_qrcode}" />
     </exec>
+    <exec executable="python" dir="${src}/${qrcode_prefix}">
+      <arg line="setup.py install" />
+    </exec>
+    <!-- -->
   </target>
 
 </project>
