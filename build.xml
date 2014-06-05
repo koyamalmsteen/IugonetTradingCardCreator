@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<project name="IugonetMetadataDB" default="all" xmlns:ac="antlib:net.sf.antcontlib">
+  <property environment="env" />
+  <property file="build.properties" />
+
+  <taskdef resource="net/sf/antcontrib/antlib.xml">
+    <classpath>
+      <pathelement location="/usr/share/java/lib/ant-contrib.jar" />
+    </classpath>
+  </taskdef>
+
+  <condition property="have.proxy">
+    <equals arg1="${have_proxy}" arg2="yes" />
+  </condition>
+
+  <target name="all" depends="initial_message, packages, init, mdb, final_message" />
+
+  <target name="initial_message" description="Display initial message">
+    <echo message="###&#x0A;###&#x0A;This installation process takes 60 minutes at least.&#x0A;###&#x0A;###&#x0A;" />
+  </target>
+
+  <target name="final_message" description="Display final message">
+    <exec executable="/bin/bash" outputproperty="ip_address">
+      <arg value="-c" />
+      <arg value="/sbin/ifconfig | awk '{if (NR==2){sub(&quot;addr:&quot;,&quot;&quot;,$2);print $2}}'" />
+    </exec>
+    <echo message="###&#x0A;###&#x0A;Access to http://${ip_address}/geta_client/gss3.html&#x0A;&#x0A; and&#x0A;&#x0A;Access to http://${ip_address}/index.html&#x0A;###&#x0A;###&#x0A;" />
+  </target>
+
+</project>
