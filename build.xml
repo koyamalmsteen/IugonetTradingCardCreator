@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<project name="IugonetMetadataDB" default="all" xmlns:ac="antlib:net.sf.antcontlib">
+<project name="IugonetQRCodeCreator" default="all" xmlns:ac="antlib:net.sf.antcontlib">
   <property environment="env" />
   <property file="build.properties" />
 
@@ -13,10 +13,10 @@
     <equals arg1="${have_proxy}" arg2="yes" />
   </condition>
 
-  <target name="all" depends="initial_message, packages, init, mdb, final_message" />
+  <target name="all" depends="initial_message, packages, final_message" />
 
   <target name="initial_message" description="Display initial message">
-    <echo message="###&#x0A;###&#x0A;This installation process takes 60 minutes at least.&#x0A;###&#x0A;###&#x0A;" />
+    <echo message="###&#x0A;###&#x0A;This installation process takes 5 minutes at least.&#x0A;###&#x0A;###&#x0A;" />
   </target>
 
   <target name="final_message" description="Display final message">
@@ -25,6 +25,17 @@
       <arg value="/sbin/ifconfig | awk '{if (NR==2){sub(&quot;addr:&quot;,&quot;&quot;,$2);print $2}}'" />
     </exec>
     <echo message="###&#x0A;###&#x0A;Access to http://${ip_address}/geta_client/gss3.html&#x0A;&#x0A; and&#x0A;&#x0A;Access to http://${ip_address}/index.html&#x0A;###&#x0A;###&#x0A;" />
+  </target>
+
+  <target name="clean" description="Clean">
+
+  </target>
+
+  <target name="packages" description="Install packages">
+    <get src="${src_qrcode}" usetimestamp="true" dest="${dst_qrcode}" />
+    <exec executable="tar" dir="${src}">
+      <arg line="xvzf ${dst_qrcode}" />
+    </exec>
   </target>
 
 </project>
