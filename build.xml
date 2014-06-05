@@ -41,6 +41,13 @@
       <arg line="setup.py install" />
     </exec>
     <!-- -->
+    <antcall target="saxon" description="Install saxon-he" />
+
+  </target>
+
+  <target name="saxon" description="Install saxon-he">
+    <get src="${src_saxon}" dest="${dst_saxon}" usetimestamp="true" />
+    <unzip src="${dst_saxon}" dest="${src}" />
   </target>
 
 </project>
